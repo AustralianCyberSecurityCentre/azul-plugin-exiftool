@@ -123,8 +123,8 @@ class AzulPluginExifTool(BinaryPlugin):
         # own tz info, so not sure if there's a way to force preserve that.
         env = dict(os.environ)
         env["TZ"] = "UTC"
-        p = subprocess.run(  # noqa: S603, S607 # nosec B603 B607
-            ["exiftool", "-json", path],
+        p = subprocess.run(  # noqa: S603
+            ["exiftool", "-json", path],  # noqa: S607
             env=env,
             capture_output=True,
             timeout=self.cfg.timeout,
