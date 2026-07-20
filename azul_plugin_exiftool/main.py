@@ -115,7 +115,7 @@ class AzulPluginExifTool(BinaryPlugin):
         """Run exiftool on cmdline, parsing json response content into features."""
         path = job.get_data().get_filepath()
         # Check if binary is full of zeros and return malformed if so.
-        if AzulPluginExifTool.is_binary_file_full_of_zeros(path):
+        if self.is_binary_file_full_of_zeros(path):
             return self.is_malformed("Binary is full of zeros.")
 
         # I believe we want to force UTC as some date times are reported in local tz
@@ -127,7 +127,7 @@ class AzulPluginExifTool(BinaryPlugin):
             ["exiftool", "-json", path],  # noqa: S607
             env=env,
             capture_output=True,
-            timeout=self.cfg.timeout,
+            timeout=self.cfg.timeout,  # ty: ignore[unresolved-attribute] ty doesn't understand add_settings
         )
         if p.returncode and b"Unknown file type" in p.stdout:
             # exiftool treats unknown types as error
@@ -165,12 +165,12 @@ class AzulPluginExifTool(BinaryPlugin):
                 message=f"Completed but the following fields were truncated {','.join(truncated_field_names)}",
             )
 
-    def features(self, jsonstring) -> tuple[dict[str, list[FeatureValue]], list[str]]:
+    def features(self, jsonstring) -> tuple[dict[str, list[FeatureValue] | int | str], list[str]]:
         """Given exiftool output in json format, transform into a features dict.
 
         returns: a dictionary of features to add and a boolean indicating if any values were truncated.
         """
-        features = {}
+        features: dict[str, list[FeatureValue] | int | str] = {}
         truncated_field_names = []
         # returns a list of dicts containing key:value metadata attributes
         # May be future issues with field name collisions.
@@ -193,10 +193,10 @@ class AzulPluginExifTool(BinaryPlugin):
                         truncated_field_names.append(field)
                         val = val[: self.cfg.max_value_length]
                 # regardless, always set the generic feature
-                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))
+                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))  # ty: ignore[unresolved-attribute] ty thinks exif_metadata could still be str or int
         return features, truncated_field_names
 
-    def is_binary_file_full_of_zeros(file_path):
+    def is_binary_file_full_of_zeros(self, file_path):
         """Scan file for zeros."""
         with open(file_path, "rb") as file:
             byte = file.read(1)
