@@ -78,8 +78,7 @@ class TestExifTool(test_template.TestPlugin):
                 state=State(State.Label.COMPLETED),
                 events=[
                     Event(
-                        entity_type="binary",
-                        entity_id="31903ed09df4fc4058fe5233d95b5128c744a2bb1b21eda4ed64bf8efed74c78",
+                        sha256="31903ed09df4fc4058fe5233d95b5128c744a2bb1b21eda4ed64bf8efed74c78",
                         features={
                             "exif_metadata": [
                                 FV("3", label="Version"),
@@ -165,8 +164,7 @@ class TestExifTool(test_template.TestPlugin):
                 ),
                 events=[
                     Event(
-                        entity_type="binary",
-                        entity_id="2d23f036a6f82244dde8012e8e2dbce42398c4b7908679c6ca3901e767ade027",
+                        sha256="2d23f036a6f82244dde8012e8e2dbce42398c4b7908679c6ca3901e767ade027",
                         features={
                             "exif_metadata": [
                                 FV("0", label="DataDefaultControlFontId"),
@@ -534,8 +532,7 @@ class TestExifTool(test_template.TestPlugin):
                 state=State(State.Label.COMPLETED),
                 events=[
                     Event(
-                        entity_type="binary",
-                        entity_id="7ccb8a50afa675bcba87788d7364db5a037ba507cafbe3ec5c802563f4cb505a",
+                        sha256="7ccb8a50afa675bcba87788d7364db5a037ba507cafbe3ec5c802563f4cb505a",
                         features={
                             "exif_metadata": [
                                 FV("%temp%", label="WorkingDirectory"),
