@@ -127,7 +127,7 @@ class AzulPluginExifTool(BinaryPlugin):
             ["exiftool", "-json", path],  # noqa: S607
             env=env,
             capture_output=True,
-            timeout=self.cfg.timeout,  # ty: ignore[unresolved-attribute] ty doesn't understand add_settings
+            timeout=self.cfg.timeout,  # ty: ignore[missing-attribute] ty doesn't understand add_settings
         )
         if p.returncode and b"Unknown file type" in p.stdout:
             # exiftool treats unknown types as error
@@ -193,7 +193,7 @@ class AzulPluginExifTool(BinaryPlugin):
                         truncated_field_names.append(field)
                         val = val[: self.cfg.max_value_length]
                 # regardless, always set the generic feature
-                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))  # ty: ignore[unresolved-attribute] ty thinks exif_metadata could still be str or int
+                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))  # ty: ignore[missing-union-attribute] ty thinks exif_metadata could still be str or int
         return features, truncated_field_names
 
     def is_binary_file_full_of_zeros(self, file_path):
