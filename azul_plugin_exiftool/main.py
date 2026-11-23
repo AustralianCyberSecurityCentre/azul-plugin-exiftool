@@ -193,7 +193,7 @@ class AzulPluginExifTool(BinaryPlugin):
                         truncated_field_names.append(field)
                         val = val[: self.cfg.max_value_length]
                 # regardless, always set the generic feature
-                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))  # ty: ignore[missing-attribute] ty thinks exif_metadata could still be str or int
+                features.setdefault("exif_metadata", []).append(FV(str(val), label=field))  # ty: ignore[missing-union-attribute] ty thinks exif_metadata could still be str or int
         return features, truncated_field_names
 
     def is_binary_file_full_of_zeros(self, file_path):
